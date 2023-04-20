@@ -8,11 +8,8 @@ import cors, { CorsOptions } from 'cors'
 const port = Constant.PORT
 const app: Express = express()
 const apiRouter = Router()
-const corsOptions: CorsOptions = {
-  origin: '*'
-}
 
-apiRouter.use(cors(corsOptions))
+apiRouter.use(cors())
 apiRouter.use('/restaurants', RestaurantRouter)
 apiRouter.use('/_z', HealthRouter)
 
