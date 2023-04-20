@@ -1,0 +1,8 @@
+.hide-list {
+  list-style: none;
+  --webkit-list-style: none;
+}
+
+.hide-list::-webkit-details-marker {
+  display: none; /* for Safari */
+}
