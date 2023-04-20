@@ -1,0 +1,28 @@
+version: '3'
+name: bcbk-web2023
+services:
+  node:
+    container_name: backend
+    restart: always
+    build: .
+    ports:
+      - 80:8080
+    volumes:
+      - ./:/code
+    networks:
+      - database
+    links:
+      - mongo
+  mongo:
+    image: mongo
+    container_name: mongoDB
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - database
+
+volumes:
+  mongodb:
+
+networks:
+  database:
