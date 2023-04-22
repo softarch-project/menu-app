@@ -11,7 +11,7 @@ const apiRouter = Router()
 apiRouter.use('/restaurants', RestaurantRouter)
 apiRouter.use('/_z', HealthRouter)
 
-app.use(ClientRouter)
 app.use('/api', apiRouter)
+app.use('/', ClientRouter)
 
 app.listen(port)
