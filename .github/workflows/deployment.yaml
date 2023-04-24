@@ -51,6 +51,8 @@ jobs:
           node-version: '14'
           cache: 'npm'
       - name: Create Task Definitions JSON file
+        env:
+          - IMAGE=${{ steps.build-image.outputs.image }}
         run: |
           npm i dotenv
           node .github/workflows/taskdef.js
@@ -61,7 +63,6 @@ jobs:
           task-definition: .github/workflows/taskdef.json
           container-name: MenuApp
           image: ${{ steps.build-image.outputs.image }}
-
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
