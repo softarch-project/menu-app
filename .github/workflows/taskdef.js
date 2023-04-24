@@ -6,8 +6,7 @@ taskdef_config = {
   containerDefinitions: [
     {
       name: 'MenuApp',
-      image:
-        '847602995110.dkr.ecr.ap-southeast-1.amazonaws.com/fastmenu-webapi',
+      image: process.env.IMAGE,
       essential: true,
       portMappings: [
         {
@@ -18,11 +17,11 @@ taskdef_config = {
       ]
     }
   ],
-  requiresCompatibilities: ['FARGATE'],
+  requiresCompatibilities: ['EC2'],
   networkMode: 'awsvpc',
-  cpu: '256',
+  cpu: '1024',
   memory: '512',
-  family: 'MenuApp'
+  family: 'MenuAppTask'
 }
 
 fs.writeFileSync('taskdef.json', JSON.stringify(taskdef_config))
