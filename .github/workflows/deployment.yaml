@@ -43,5 +43,7 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_NAME:$ECR_IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY_NAME:$ECR_IMAGE_TAG
       - name: Create Task Definitions JSON file
-        run: node .github/workflows/taskdef.js
+        run: |
+          npm i dotenv
+          node .github/workflows/taskdef.js
       
