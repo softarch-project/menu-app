@@ -3,11 +3,13 @@ import Constant from './constant'
 import HealthRouter from './routes/health.route'
 import ClientRouter from './routes/clientside.route'
 import RestaurantRouter from './routes/restaurant.route'
+import OrderRouter from './routes/order.route'
 
 const port = Constant.PORT
 const app: Express = express()
 const apiRouter = Router()
 
+apiRouter.use('/bills', OrderRouter)
 apiRouter.use('/restaurants', RestaurantRouter)
 apiRouter.use('/_z', HealthRouter)
 
