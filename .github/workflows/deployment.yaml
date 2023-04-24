@@ -57,7 +57,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: .github/workflows/taskdef.json
+          task-definition: taskdef.json
           container-name: MenuApp
           image: ${{ env.ECR_IMAGE_NAME }}
       - name: Deploy Amazon ECS task definition
