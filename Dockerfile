@@ -1,9 +1,13 @@
 FROM node:16
 
 WORKDIR /usr/src/app
-# Bundle app source
 COPY . .
 
+WORKDIR /usr/src/app/clientside
+RUN yarn install
+RUN yarn build
+
+WORKDIR /usr/src/app
 RUN yarn install
 RUN yarn build
 
