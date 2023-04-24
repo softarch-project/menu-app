@@ -2,7 +2,7 @@ version: '3'
 name: menu-app
 services:
   node:
-    container_name: backend
+    container_name: backend-menu
     build: .
     ports:
       - 8080:80
@@ -11,8 +11,8 @@ services:
     networks:
       - database
     links:
-      - mongo
-  menu-mongo:
+      - mongo-menu
+  mongo-menu:
     image: mongo
     volumes:
       - mongodb:/data/db
