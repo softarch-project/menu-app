@@ -13,7 +13,6 @@ import { apiBasePath } from '../utils/constant'
 
 export class RestaurantStore {
   @observable restaurant?: Restaurant
-  @observable restaurantId?: number
   @observable menus: ShortMenu[] = []
   @observable restaurantError?: AxiosError
   @observable menusOnSale: ShortMenu[] = []
@@ -21,13 +20,6 @@ export class RestaurantStore {
 
   constructor() {
     makeObservable(this)
-
-    reaction(
-      () => this.restaurantId,
-      () => {
-        this.fetchRestaurant()
-      }
-    )
 
     reaction(
       () => this.restaurant?.menus,
@@ -38,50 +30,17 @@ export class RestaurantStore {
   }
 
   @action.bound
-  setRestaurantId(id: number) {
-    runInAction(() => (this.restaurantId = id))
-  }
-
-  @action.bound
-  fetchRestaurant() {
-    runInAction(() => (this.restaurant = undefined))
-    axios
-      .get<Restaurant>(apiBasePath + `/restaurants/${this.restaurantId}`)
-      .then((res) => {
-        runInAction(() => (this.restaurant = res.data))
-        runInAction(() => (this.menus = []))
-        runInAction(() => (this.menusOnSale = []))
-        document.title = res.data.name + ' | Online Menu'
-      })
-      .catch((err) => {
-        runInAction(() => (this.restaurantError = err))
-      })
-  }
-
-  @action.bound
   async fetchShortMenus() {
-    if (!this.restaurant) return
-    for (const menuName of this.restaurant.menus) {
-      const response = await axios.get<ShortMenu>(
-        apiBasePath +
-          `/restaurants/${this.restaurantId}/menus/${menuName}/short`
-      )
-      runInAction(() => (this.menus = [...this.menus, response.data]))
-      if (this.isOnSale(response.data)) {
-        runInAction(
-          () => (this.menusOnSale = [...this.menusOnSale, response.data])
-        )
-      }
-    }
-  }
-
-  @computed get isStillOpen(): boolean {
-    if (!this.restaurant) return false
-    const openDate = this.strPeriodToDate(this.restaurant.activeTimePeriod.open)
-    const closeDate = this.strPeriodToDate(
-      this.restaurant.activeTimePeriod.close
+    const response = await axios.get<ShortMenu>(
+      apiBasePath +
+        `/shorMenu`
     )
-    return this.isTimeInRange(new Date(), openDate, closeDate)
+    runInAction(() => (this.menus = [...this.menus, response.data]))
+    if (this.isOnSale(response.data)) {
+      runInAction(
+        () => (this.menusOnSale = [...this.menusOnSale, response.data])
+      )
+    }
   }
 
   isOnSale = (menu: ShortMenu): boolean => {

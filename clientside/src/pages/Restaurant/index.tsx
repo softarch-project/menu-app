@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import HoursStatusElement from '../../components/HoursStatus'
 import './index.css'
-import ActiveHours from '../../components/ActiveHours'
 import AllMenus from '../../components/AllMenus'
 import { inject, observer } from 'mobx-react'
 import { StoreProps } from '../../stores/store'
@@ -11,19 +9,9 @@ import Loading from '../../components/Loading'
 
 const RestaurantPage: FC<StoreProps> = ({ restaurantStore }) => {
   const {
-    restaurant,
     menus,
-    setRestaurantId,
-    isStillOpen,
-    restaurantError,
     menusOnSale,
   } = restaurantStore!
-  const { restaurantId } = useParams()
-
-  const HoursStatus = useMemo(
-    () => <HoursStatusElement isActive={isStillOpen} />,
-    [restaurant?.activeTimePeriod]
-  )
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
@@ -33,63 +21,38 @@ const RestaurantPage: FC<StoreProps> = ({ restaurantStore }) => {
     })
   }, [])
 
-  useEffect(() => {
-    if (restaurantId) setRestaurantId(parseInt(restaurantId))
-  }, [restaurantId])
-
-  if (
-    restaurantError &&
-    restaurantError.response &&
-    restaurantError.response.status === 404
-  ) {
-    return <NotFound />
-  }
-
-  if (restaurant) {
-    return (
-      <div className="w-screen">
-        <img
-          src={restaurant?.coverImage}
-          alt="Restaurant Banner"
-          className="object-cover h-[15rem] w-full static"
-        />
-        <div className="relative">
-          <div className="bg-white w-full absolute top-[-30px] rounded-t-3xl flex justify-center">
-            <div className="max-w-2xl">
-              <div className="pt-5 px-5">{HoursStatus}</div>
-              <h1
-                id="title"
-                className="pt-5 pb-3 px-5 font-bold text-xl sticky top-0 w-full transition duration-300 z-[99]"
-              >
-                {restaurant?.name}
-              </h1>
-              <div className="text-xs px-5">
-                <ActiveHours
-                  open={restaurant?.activeTimePeriod.open ?? ''}
-                  close={restaurant?.activeTimePeriod.close ?? ''}
-                />
-              </div>
-              {restaurantId && menusOnSale.length > 0 && (
-                <div className="py-5 px-5">
-                  <AllMenus
-                    title="On Sale"
-                    restaurantId={restaurantId}
-                    menus={menusOnSale}
-                  />
-                </div>
-              )}
-              <div className="py-5 px-5">
-                {restaurantId && (
-                  <AllMenus restaurantId={restaurantId} menus={menus} />
-                )}
-              </div>
+return (
+  <div className="w-screen">
+    <img
+      src= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sortiraparis.com%2Fen%2Fwhere-to-eat-in-paris%2Frestaurant%2Farticles%2F278227-too-restaurant-we-tested-the-sublime-panoramic-restaurant-of-paris-menu-and-pictures&psig=AOvVaw1Jh9m85I9TOJ6MWCEzAxiO&ust=1682458720328000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKDs5qa9w_4CFQAAAAAdAAAAABAI"
+      alt="Restaurant Banner"
+      className="object-cover h-[15rem] w-full static"
+    />
+    <div className="relative">
+      <div className="bg-white w-full absolute top-[-30px] rounded-t-3xl flex justify-center">
+        <div className="max-w-2xl">
+          <h1
+            id="title"
+            className="pt-5 pb-3 px-5 font-bold text-xl sticky top-0 w-full transition duration-300 z-[99]"
+          >
+            Klua BoonMee
+          </h1>
+          {menusOnSale.length > 0 && (
+            <div className="py-5 px-5">
+              <AllMenus
+                title="On Sale"
+                menus={menusOnSale}
+              />
             </div>
+          )}
+          <div className="py-5 px-5">
+              <AllMenus menus={menus} />
           </div>
         </div>
       </div>
-    )
-  }
-  return <Loading />
+    </div>
+  </div>
+)
 }
 
 export default inject('restaurantStore')(observer(RestaurantPage))

@@ -5,11 +5,10 @@ import { HiChevronDoubleRight } from 'react-icons/hi'
 import Price from './Price'
 
 export interface MenuCardHorizontalProps {
-  restaurantId: string
   menu: ShortMenu
 }
 
-const MenuCard = memo(({ restaurantId, menu }: MenuCardHorizontalProps) => {
+const MenuCard = memo(({ menu }: MenuCardHorizontalProps) => {
   const imageUrl = menu.thumbnailImage ?? '/no-photo.svg'
 
   const isInDiscount = () => {
@@ -32,7 +31,7 @@ const MenuCard = memo(({ restaurantId, menu }: MenuCardHorizontalProps) => {
     return currentTime > beginTime && currentTime < endTime
   }
 
-  const getMenuUrl = () => `/${restaurantId}/${menu.name}`
+  const getMenuUrl = () => `/${menu.name}`
 
   return (
     <Link to={getMenuUrl()} className="flex space-x-4 w-full">
