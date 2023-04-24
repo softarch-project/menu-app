@@ -66,10 +66,11 @@ jobs:
           task-definition: taskdef.json
           container-name: MenuApp
           image: ${{ env.ECR_IMAGE_NAME }}
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      - name: Run Task on Amazon ECS
+        uses: smitp/amazon-ecs-run-task@v1
         with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: MenuAppService
+          task-definition: task-definition.json
           cluster: MenuAppCluster
-          wait-for-service-stability: true
+          count: 1
+          started-by: github-actions-${{ github.actor }}
+          wait-for-finish: true
