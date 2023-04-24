@@ -6,7 +6,7 @@ taskdef_config = {
   containerDefinitions: [
     {
       name: 'MenuApp',
-      image: process.env.IMAGE,
+      image: process.env.ECR_IMAGE_NAME,
       essential: true,
       portMappings: [
         {
