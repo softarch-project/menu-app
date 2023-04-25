@@ -20,7 +20,7 @@ export class RestaurantStore {
 
   constructor() {
     makeObservable(this)
-
+    this.fetchShortMenus()
     reaction(
       () => this.restaurant?.menus,
       () => {
@@ -31,8 +31,9 @@ export class RestaurantStore {
 
   @action.bound
   async fetchShortMenus() {
+    
     const response = await axios.get<ShortMenu>(
-      apiBasePath + `/shorMenu`
+      apiBasePath + `shortMenu`
     )
     runInAction(() => (this.menus = [...this.menus, response.data]))
     if (this.isOnSale(response.data)) {
