@@ -24,7 +24,7 @@ const RestaurantPage: FC<StoreProps> = ({ restaurantStore }) => {
 return (
   <div className="w-screen">
     <img
-      src= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sortiraparis.com%2Fen%2Fwhere-to-eat-in-paris%2Frestaurant%2Farticles%2F278227-too-restaurant-we-tested-the-sublime-panoramic-restaurant-of-paris-menu-and-pictures&psig=AOvVaw1Jh9m85I9TOJ6MWCEzAxiO&ust=1682458720328000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKDs5qa9w_4CFQAAAAAdAAAAABAI"
+      src= "https://cdn.sortiraparis.com/images/61/100789/834011-too-restaurant-too-hotel-paris-photos-menu.jpg"
       alt="Restaurant Banner"
       className="object-cover h-[15rem] w-full static"
     />
