@@ -32,8 +32,7 @@ export class RestaurantStore {
   @action.bound
   async fetchShortMenus() {
     const response = await axios.get<ShortMenu>(
-      apiBasePath +
-        `/shorMenu`
+      apiBasePath + `/shorMenu`
     )
     runInAction(() => (this.menus = [...this.menus, response.data]))
     if (this.isOnSale(response.data)) {

@@ -13,7 +13,7 @@ import Loading from '../../components/Loading'
 import { apiBasePath } from '../../utils/constant'
 
 const Menu: FC<StoreProps> = ({ restaurantStore }) => {
-  const { restaurantId, menuName } = useParams()
+  const { menuName } = useParams()
   const { isTimeInRange, strPeriodToDate } = restaurantStore!
   const [menu, setMenu] = useState<FullMenu>()
   const [error, setError] = useState<AxiosError>()
@@ -23,7 +23,7 @@ const Menu: FC<StoreProps> = ({ restaurantStore }) => {
   const getFullMenuDetail = () => {
     axios
       .get<FullMenu>(
-        apiBasePath + `/restaurants/${restaurantId}/menus/${menuName}/full`
+        apiBasePath + `/${menuName}/full`
       )
       .then((res) => {
         setMenu(res.data)
@@ -52,7 +52,7 @@ const Menu: FC<StoreProps> = ({ restaurantStore }) => {
   if (menu) {
     return (
       <div className="w-screen h-screen">
-        <BackButton url={`/${restaurantId}`} />
+        {/* <BackButton url={`/${restaurantId}`} /> */}
         <img
           src={getImageUrl()}
           alt={menu.name}
